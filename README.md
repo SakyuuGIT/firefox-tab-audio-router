@@ -2,8 +2,6 @@
 
 Extension Firefox/Zen qui route l'audio des onglets **YouTube** et **X (Twitter)** vers une sortie audio choisie, avec une bannière de sélection rapide.
 
-Thème visuel : **Digital Parasite** (fond sombre, accent rose `#ff2d7a`, coins carrés).
-
 ## Fonctionnement
 
 - Firefox impose une sécurité : `navigator.mediaDevices.selectAudioOutput()` nécessite un geste utilisateur, une fois par session navigateur.
