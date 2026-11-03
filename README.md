@@ -15,6 +15,7 @@ Firefox/Zen extension that routes audio from **YouTube** and **X (Twitter)** tab
 
 - `youtube.com` (including `music.youtube.com`)
 - `x.com`
+- `instagram.com`
 
 ## Installation
 
@@ -42,7 +43,7 @@ Firefox/Zen extension that routes audio from **YouTube** and **X (Twitter)** tab
 ## Permissions
 
 - `storage` - remember the chosen output device.
-- Hosts: `*://youtube.com/*`, `*://*.youtube.com/*`, `*://x.com/*`, `*://*.x.com/*`.
+- Hosts: `*://youtube.com/*`, `*://*.youtube.com/*`, `*://x.com/*`, `*://*.x.com/*`, `*://instagram.com/*`, `*://*.instagram.com/*`.
 
 ## Known limitations
 
