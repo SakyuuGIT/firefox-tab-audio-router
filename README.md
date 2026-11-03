@@ -1,50 +1,50 @@
 # Firefox Tab Audio Router
 
-Extension Firefox/Zen qui route l'audio des onglets **YouTube** et **X (Twitter)** vers une sortie audio choisie, avec une bannière de sélection rapide.
+Firefox/Zen extension that routes audio from **YouTube** and **X (Twitter)** tabs to a chosen output device, with a quick selection banner.
 
-## Fonctionnement
+## How it works
 
-- Firefox impose une sécurité : `navigator.mediaDevices.selectAudioOutput()` nécessite un geste utilisateur, une fois par session navigateur.
-- L'extension détecte la lecture et affiche une bannière en haut à droite.
-- Au clic sur « Choose output device », le sélecteur natif de Firefox s'ouvre.
-- Le `deviceId` choisi est mémorisé (`browser.storage.local` + `localStorage`) et appliqué à tous les éléments `<audio>`/`<video>` via `HTMLMediaElement.setSinkId()`.
-- Le routage est ré-armé automatiquement sur les changements de piste (`emptied`, `loadstart`) et les navigations SPA.
-- Un seul choix s'applique à tous les sites supportés.
+- Firefox enforces a security policy: `navigator.mediaDevices.selectAudioOutput()` requires a user gesture, once per browser session.
+- The extension detects playback and shows a banner in the top-right corner.
+- Clicking "Choose output device" opens Firefox's native audio output selector.
+- The chosen `deviceId` is stored (`browser.storage.local` + `localStorage`) and applied to all `<audio>`/`<video>` elements via `HTMLMediaElement.setSinkId()`.
+- Routing is re-armed automatically on track changes (`emptied`, `loadstart`) and SPA navigations.
+- A single choice applies to all supported sites.
 
-## Sites supportés
+## Supported sites
 
-- `youtube.com` (incl. `music.youtube.com`)
+- `youtube.com` (including `music.youtube.com`)
 - `x.com`
 
 ## Installation
 
-### Temporaire (sans signature)
+### Temporary (unsigned)
 
-1. Ouvrir `about:debugging#/runtime/this-firefox`.
-2. « Charger un module complémentaire temporaire ».
-3. Sélectionner `manifest.json` dans le dossier de l'extension.
-4. Active jusqu'au redémarrage du navigateur.
+1. Open `about:debugging#/runtime/this-firefox`.
+2. Click "Load Temporary Add-on".
+3. Select `manifest.json` from the extension folder.
+4. Active until the browser is restarted.
 
-### Permanente (méthode développeur, Zen/Firefox)
+### Permanent (developer method, Zen/Firefox)
 
-1. Ouvrir `about:config`, accepter l'avertissement.
-2. Passer `xpinstall.signatures.required` à `false`.
-3. `about:addons` → engrenage ⚙ → « Installer un module depuis un fichier… ».
-4. Sélectionner `firefox-tab-audio-router.xpi`.
+1. Open `about:config` and accept the warning.
+2. Set `xpinstall.signatures.required` to `false`.
+3. Open `about:addons` -> gear icon -> "Install Add-on From File...".
+4. Select `firefox-tab-audio-router.xpi`.
 
-## Utilisation
+## Usage
 
-1. Aller sur YouTube ou X.
-2. Lancer une lecture : la bannière apparaît.
-3. Cliquer « Choose output device » et choisir la sortie.
-4. Le choix est mémorisé et réappliqué automatiquement ensuite.
+1. Go to YouTube or X.
+2. Start playback: the banner appears.
+3. Click "Choose output device" and pick the output.
+4. The choice is remembered and re-applied automatically afterwards.
 
 ## Permissions
 
-- `storage` — mémoriser la sortie choisie.
-- Hosts : `*://youtube.com/*`, `*://*.youtube.com/*`, `*://x.com/*`, `*://*.x.com/*`.
+- `storage` - remember the chosen output device.
+- Hosts: `*://youtube.com/*`, `*://*.youtube.com/*`, `*://x.com/*`, `*://*.x.com/*`.
 
-## Limitations connues
+## Known limitations
 
-- **SoundCloud** : n'a pas pu être fait fonctionner. SoundCloud utilise un player dans un iframe de crossfade et/ou l'API Web Audio (`AudioContext`) au lieu d'éléments `<audio>`/`<video>` standards ; `setSinkId` échoue avec `NotFoundError` dans ce contexte. Toute aide / PR pour supporter SoundCloud est bienvenue.
-- `selectAudioOutput` peut être indisponible sur les anciennes versions de Firefox.
+- **SoundCloud**: could not be made to work. SoundCloud uses a player inside a crossfade iframe and/or the Web Audio API (`AudioContext`) instead of standard `<audio>`/`<video>` elements; `setSinkId` fails with `NotFoundError` in that context. Help / PRs to support SoundCloud are welcome.
+- `selectAudioOutput` may be unavailable on older Firefox versions.
