@@ -1,0 +1,55 @@
+{
+  "manifest_version": 2,
+  "name": "Firefox Tab Audio Router",
+  "version": "1.0.0",
+  "description": "Routes audio from YouTube, X and Instagram tabs to a chosen output device.",
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png"
+    },
+    "default_title": "Tab Audio Output Router"
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "*://youtube.com/*",
+    "*://*.youtube.com/*",
+    "*://x.com/*",
+    "*://*.x.com/*",
+    "*://instagram.com/*",
+    "*://*.instagram.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://youtube.com/*",
+        "*://*.youtube.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*",
+        "*://instagram.com/*",
+        "*://*.instagram.com/*"
+      ],
+      "js": [
+        "content_scripts/content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "tab-audio-output-router@sakyuu.local",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    }
+  }
+}
