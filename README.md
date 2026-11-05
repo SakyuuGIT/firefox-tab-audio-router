@@ -35,8 +35,13 @@ Firefox/Zen extension that routes audio from **YouTube** and **X (Twitter)** tab
 
 ## Usage
 
-1. Go to YouTube or X.
-2. Start playback: the banner appears.
+- **X (Twitter)**: the banner appears automatically when playback starts.
+- **YouTube**: no automatic banner. Click the extension icon in the toolbar to open the device picker.
+- **Instagram**: the banner appears automatically when playback starts.
+
+Steps:
+1. Go to a supported site.
+2. On X/Instagram, start playback and use the banner. On YouTube, click the extension icon.
 3. Click "Choose output device" and pick the output.
 4. The choice is remembered and re-applied automatically afterwards.
 

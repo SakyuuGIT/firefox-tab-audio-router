@@ -8,6 +8,8 @@
   document.documentElement.dataset.tabAudioRouterActive = "1";
 
   const isTopFrame = (window.top === window.self);
+  const isYouTube = /youtube\.com$/i.test(location.hostname);
+  const autoPrompt = !isYouTube;
 
   const EXT_KEY = "tabAudioSink_v1";
   const LS_KEY = "tabAudioSink_v1";
@@ -281,7 +283,9 @@
     if (!saved?.deviceId) {
       if (myGen !== applyGeneration) return false;
       needsRearm = true;
-      showOverlay("Choose an output device for this tab.", { buttonText: "Choose output device" });
+      if (autoPrompt) {
+        showOverlay("Choose an output device for this tab.", { buttonText: "Choose output device" });
+      }
       return false;
     }
 
@@ -300,10 +304,12 @@
       if (r.lastError?.name === "NotFoundError") {
         if (!sessionArmed) {
           needsRearm = true;
-          showOverlay(
-            "Output routing needs to be re-armed for this tab.\nClick Play (or press the button) to choose an output device.",
-            { buttonText: "Re-arm output" }
-          );
+          if (autoPrompt) {
+            showOverlay(
+              "Output routing needs to be re-armed for this tab.\nClick Play (or press the button) to choose an output device.",
+              { buttonText: "Re-arm output" }
+            );
+          }
           warn("Saved deviceId not valid in this session → re-arm on user gesture.");
         }
         return false;
@@ -313,7 +319,7 @@
     }
 
     if (myGen !== applyGeneration) return false;
-    if (needsRearm && !sessionArmed) {
+    if (needsRearm && !sessionArmed && autoPrompt) {
       showOverlay("Click Play to re-arm output routing (or press the button).", { buttonText: "Re-arm output" });
     } else {
       hideOverlay();
@@ -415,7 +421,17 @@
   ensureOverlay();
   applySaved("initial");
 
+  try {
+    browser.runtime.onMessage.addListener((msg) => {
+      if (msg && msg.type === "promptDevice") {
+        promptAndApply("icon-click");
+        return true;
+      }
+    });
+  } catch (e) {}
+
   document.addEventListener("click", (ev) => {
+    if (!autoPrompt) return;
     if (!needsRearm || hasEverArmed) return;
     const t = ev.target;
     if (!t) return;
